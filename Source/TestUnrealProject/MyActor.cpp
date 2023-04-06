@@ -21,11 +21,17 @@ void AMyActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//카테고리, 로깅수준, 형식, 인자
+	UE_LOG(LogTemp, Warning, TEXT("BeginPlay %d"), 3);
 }
 
 // Called every frame
 void AMyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	//UE_LOG(LogTemp, Error, TEXT("Tick %f"), DeltaTime);
+	AddActorLocalRotation(FRotator(0.f, RotateSpeed * DeltaTime, 0.f));
+
 }
 
