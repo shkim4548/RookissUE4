@@ -11,7 +11,8 @@ AMyActor::AMyActor()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MESH"));	//크로스 플랫폼을 위해 TEXT를 사용한다.
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM(TEXT("StaticMesh'/Game/StarterContent/Props/SM_Couch.SM_Couch'"));	//안에 들어가는 문자열은 경로정보
 	RootComponent = Mesh;
-	if (SM.Succeeded()) {
+	if (SM.Succeeded())
+	{
 		Mesh->SetStaticMesh(SM.Object);
 	}
 }
@@ -34,4 +35,3 @@ void AMyActor::Tick(float DeltaTime)
 	AddActorLocalRotation(FRotator(0.f, RotateSpeed * DeltaTime, 0.f));
 
 }
-
