@@ -14,8 +14,9 @@ AMyPawn::AMyPawn()
 	
 	Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MOVEMENT"));
 	
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM(TEXT("StaticMesh'/Game/StarterContent/Props/SM_Couch.SM_Couch'"));	//안에 들어가는 문자열은 경로정보
 	RootComponent = Mesh;
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM(TEXT("StaticMesh'/Game/StarterContent/Props/SM_Couch.SM_Couch'"));	//안에 들어가는 문자열은 경로정보
 
 	if (SM.Succeeded())
 	{
