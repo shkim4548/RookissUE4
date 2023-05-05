@@ -17,8 +17,16 @@ class TESTUNREALENGINE_API UMyAnimInstance : public UAnimInstance
 public:
 	UMyAnimInstance();
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
-	void PlayAttackMontage();
 	
+	void PlayAttackMontage();
+	void JumpToSection(int32 SectionIndex);
+
+	FName GetAttackMontageName(int32 SectionIndex);
+	
+private:
+	UFUNCTION()
+		void AnimNotify_AttackHit();	//이 함수명은 예약어이다.
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Pawn, Meta=(AllowPrivateAccess=true))
 	float Speed;

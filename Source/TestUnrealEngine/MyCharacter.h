@@ -46,4 +46,7 @@ private:
 
 	UPROPERTY()
 	class UMyAnimInstance* AnimInstance;
+
+	UPROPERTY()
+	int32 AttackIndex = 0;	//현재 호출되는 SectionIndex 출력을 보기 위함
 };

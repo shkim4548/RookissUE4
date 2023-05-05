@@ -68,11 +68,9 @@ void AMyCharacter::Attack()
 	if (IsAttacking)
 		return;
 
-	AnimInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
-	if (AnimInstance)
-	{
-		AnimInstance->PlayAttackMontage();
-	}
+	AnimInstance->PlayAttackMontage();
+	AnimInstance->JumpToSection(AttackIndex);
+	AttackIndex = (AttackIndex + 1) % 3;
 
 	IsAttacking = true;
 }
