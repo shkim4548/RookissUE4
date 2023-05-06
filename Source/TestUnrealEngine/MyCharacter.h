@@ -49,4 +49,11 @@ private:
 
 	UPROPERTY()
 	int32 AttackIndex = 0;	//현재 호출되는 SectionIndex 출력을 보기 위함
+
+public:
+	UPROPERTY()
+	float UpdownValue = 0;
+
+	UPROPERTY()
+	float LeftRightValue = 0;
 };
