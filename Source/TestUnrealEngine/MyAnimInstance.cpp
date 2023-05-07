@@ -53,5 +53,6 @@ FName UMyAnimInstance::GetAttackMontageName(int32 SectionIndex)
 
 void UMyAnimInstance::AnimNotify_AttackHit()
 {
-	UE_LOG(LogTemp, Log, TEXT("AnimNotify_AttackHit"));	//애니메이션 작동시 호출될 함수
+	//UE_LOG(LogTemp, Log, TEXT("AnimNotify_AttackHit"));	//애니메이션 작동시 호출될 함수
+	OnAttackHit.Broadcast();	//구독자 패턴
 }
