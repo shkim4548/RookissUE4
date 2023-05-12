@@ -16,7 +16,7 @@ AMyCharacter::AMyCharacter()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SPRINGARM"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
-
+	
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 
@@ -124,8 +124,7 @@ void AMyCharacter::AttackCheck()
 
 void AMyCharacter::UpDown(float Value)
 {
-	if (Value == 0.f)
-		return;
+	UpDownValue = Value;
 
 	//UE_LOG(LogTemp, Warning, TEXT("UpDown %f"), Value);
 	AddMovementInput(GetActorForwardVector(), Value);

@@ -56,7 +56,7 @@ private:
 
 public:
 	UPROPERTY()
-	float UpdownValue = 0;
+	float UpDownValue = 0;
 
 	UPROPERTY()
 	float LeftRightValue = 0;
