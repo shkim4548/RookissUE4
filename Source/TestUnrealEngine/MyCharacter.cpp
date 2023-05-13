@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "MyAnimInstance.h"
 #include "DrawDebugHelpers.h"
+#include "MyWeapon.h"	//만든 무기를 추가
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -32,12 +33,37 @@ AMyCharacter::AMyCharacter()
 	{
 		GetMesh()->SetSkeletalMesh(SM.Object);
 	}
+
+	
+	//if (GetMesh()->DoesSocketExist(WeaponSocket))	//mesh 아래에 socket이 있는지 확인한다
+	//{
+	//	static ConstructorHelpers::FObjectFinder<UStaticMesh> SW(TEXT("StaticMesh'/Game/ParagonGreystone/FX/Meshes/Heroes/Greystone/SM_Greystone_Blade_01.SM_Greystone_Blade_01'"));
+	//	//있으면 해당하는 에셋을 가져오고 성공 여부를 체크한다.
+	//	if (SW.Succeeded())
+	//	{
+	//		Weapon->SetStaticMesh(SW.Object);
+	//	}
+
+	//	Weapon->SetupAttachment(GetMesh(), WeaponSocket);	//확실히 소켓에 붙인다.
+	//}
 }
 
 // Called when the game starts or when spawned
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FName WeaponSocket(TEXT("hand_l_socket"));	//소켓을 저장할 변수 선언
+
+	//무기를 맵에 뿌려준다.
+	auto CurrentWeapon = GetWorld()->SpawnActor<AMyWeapon>(FVector::ZeroVector, FRotator::ZeroRotator);
+
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->AttachToComponent(GetMesh(),
+			FAttachmentTransformRules::SnapToTargetNotIncludingScale,
+			WeaponSocket);
+	}
 }
 
 void AMyCharacter::PostInitializeComponents()
