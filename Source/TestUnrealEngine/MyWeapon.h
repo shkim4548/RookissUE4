@@ -19,11 +19,17 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	//virtual void Tick(float DeltaTime) override;
+	virtual void PostInitializeComponents() override;	//콜백 방식으로 이벤트를 바인딩
+
+private:
+	//언리얼 함수임을 알리는 UFUNCTION을 붙여줘야한다
+	UFUNCTION()	
+	void OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 public:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Weapon;
+
+	UPROPERTY(VisibleAnywhere)
+	class UBoxComponent* Trigger;
 };
