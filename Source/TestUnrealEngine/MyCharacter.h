@@ -35,6 +35,8 @@ public:
 	void LeftRight(float Value);
 	void Yaw(float Value);
 
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 
@@ -61,6 +63,9 @@ public:
 	UPROPERTY()
 	float LeftRightValue = 0;
 
-	/*UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Weapon;*/
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* Weapon;
+
+	UPROPERTY(VisibleAnywhere)
+	class UMyStatComponent* Stat;
 };

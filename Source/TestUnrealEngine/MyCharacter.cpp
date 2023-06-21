@@ -8,6 +8,7 @@
 #include "MyAnimInstance.h"
 #include "DrawDebugHelpers.h"
 #include "MyWeapon.h"	//만든 무기를 추가
+#include "MyStatComponent.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -34,18 +35,8 @@ AMyCharacter::AMyCharacter()
 		GetMesh()->SetSkeletalMesh(SM.Object);
 	}
 
-	
-	//if (GetMesh()->DoesSocketExist(WeaponSocket))	//mesh 아래에 socket이 있는지 확인한다
-	//{
-	//	static ConstructorHelpers::FObjectFinder<UStaticMesh> SW(TEXT("StaticMesh'/Game/ParagonGreystone/FX/Meshes/Heroes/Greystone/SM_Greystone_Blade_01.SM_Greystone_Blade_01'"));
-	//	//있으면 해당하는 에셋을 가져오고 성공 여부를 체크한다.
-	//	if (SW.Succeeded())
-	//	{
-	//		Weapon->SetStaticMesh(SW.Object);
-	//	}
-
-	//	Weapon->SetupAttachment(GetMesh(), WeaponSocket);	//확실히 소켓에 붙인다.
-	//}
+	//선언부에 새로 만든 스탯 컴포넌트를 추가한다.
+	Stat = CreateDefaultSubobject<UMyStatComponent>(TEXT("STAT"));
 }
 
 // Called when the game starts or when spawned
@@ -145,6 +136,11 @@ void AMyCharacter::AttackCheck()
 	if (bResult && HitResult.Actor.IsValid())
 	{
 		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.Actor->GetName());
+
+		//A가 B를 공격했을 때, A의 클래스에서 B에 접근?, B의 클래스에서 A에 접근? 후자가 훨씬 편하다.
+		//파라미터 : 공격력, 
+		FDamageEvent DamageEvent;	//아래 함수의 두번째 파라미터를 위한 변수;
+		HitResult.Actor->TakeDamage(Stat->GetAttack(), DamageEvent, GetController(), this);	//언리얼에서 기본제공하는 함수 TakeDamage
 	}
 }
 
@@ -166,6 +162,13 @@ void AMyCharacter::LeftRight(float Value)
 void AMyCharacter::Yaw(float Value)
 {
 	AddControllerYawInput(Value);
+}
+
+float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Stat->OnAttacked(DamageAmount);
+
+	return DamageAmount;
 }
 
 void AMyCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
