@@ -68,4 +68,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	class UMyStatComponent* Stat;
+
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* HpBar;	//만든 UI를 연동하기 위한 선언부
 };

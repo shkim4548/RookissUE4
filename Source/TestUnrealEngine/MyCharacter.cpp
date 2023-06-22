@@ -9,6 +9,8 @@
 #include "DrawDebugHelpers.h"
 #include "MyWeapon.h"	//만든 무기를 추가
 #include "MyStatComponent.h"
+#include "Components/Widgetcomponent.h"
+#include "MyCharacterWidget.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -37,6 +39,18 @@ AMyCharacter::AMyCharacter()
 
 	//선언부에 새로 만든 스탯 컴포넌트를 추가한다.
 	Stat = CreateDefaultSubobject<UMyStatComponent>(TEXT("STAT"));
+
+	HpBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBAR"));
+	HpBar->SetupAttachment(GetMesh());	//가져온 위젯을 캐릭터 프리팹에 붙여준다.
+	HpBar->SetRelativeLocation(FVector(0.f, 0.f, 200.f));
+	HpBar->SetWidgetSpace(EWidgetSpace::Screen);	// 위젯 타입을 맞춰준다.
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> UW(TEXT("WidgetBlueprint'/Game/UI/WBP_HpBar.WBP_HpBar_C'"));
+	if (UW.Succeeded())
+	{
+		HpBar->SetWidgetClass(UW.Class);
+		HpBar->SetDrawSize(FVector2D(200.f, 50.f));
+	}
 }
 
 // Called when the game starts or when spawned
@@ -67,6 +81,12 @@ void AMyCharacter::PostInitializeComponents()
 		AnimInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::OnAttackMontageEnded);
 		AnimInstance->OnAttackHit.AddUObject(this, &AMyCharacter::AttackCheck);
 	}
+
+	HpBar->InitWidget();	//초기화 시 위젯을 반드시 불러올 것을 보장한다.
+
+	auto HpWidget = Cast<UMyCharacterWidget>(HpBar->GetUserWidgetObject());
+	if (HpWidget)
+		HpWidget->BindHp(Stat);	//여기서 UI와 갱신 함수를 연결해준다.
 }
 
 // Called every frame
