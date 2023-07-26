@@ -64,10 +64,8 @@ void UMyStatComponent::SetHp(int32 NewHp)
 //데미지를 받았을 때 처리될 내용, 나중에 상대방에 대한 정보를 엄청나게 많이 받아야할 것
 void UMyStatComponent::OnAttacked(float DamageAmount)
 {
-	Hp -= DamageAmount;
-	if (Hp < 0)
-		Hp = 0;
-
+	int32 NewHp = Hp - DamageAmount;
+	SetHp(NewHp);
 	//UE_LOG(LogTemp, Warning, TEXT("OnAttacked %d"), Hp);
 }
 
