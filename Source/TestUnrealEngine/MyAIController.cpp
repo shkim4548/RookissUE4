@@ -29,7 +29,7 @@ void AMyAIController::RandomMove()
 	
 	// 언리얼 네브 매쉬의 사용
 	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
-	if (NavSystem)
+	if (NavSystem == nullptr)
 		return;
 
 	FNavLocation RandomLocation;

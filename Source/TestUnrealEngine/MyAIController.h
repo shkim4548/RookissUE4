@@ -3,25 +3,26 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Controller.h"
+#include "AIController.h"
 #include "MyAIController.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
-class TESTUNREALENGINE_API AMyAIController : public AController
+class TESTUNREALENGINE_API AMyAIController : public AAIController
 {
 	GENERATED_BODY()
+
 public:
 	AMyAIController();
 
-	virtual void OnPossess(APawn* InPawn) override;	
+	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
 
 private:
 	void RandomMove();
-	
+
 private:
 	FTimerHandle TimerHandle;
 };
