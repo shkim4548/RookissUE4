@@ -198,4 +198,5 @@ float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEve
 void AMyCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	IsAttacking = false;
+	OnAttackEnd.Broadcast();	// 델리게이트 선언을 실행한다.
 }
